@@ -16,6 +16,7 @@ TeamAttrs = namedtuple(
         "banned",
         "captain_id",
         "created",
+        "hard_mode",
     ],
 )
 

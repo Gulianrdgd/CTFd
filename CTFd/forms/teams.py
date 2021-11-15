@@ -199,6 +199,7 @@ class TeamBaseForm(BaseForm):
     affiliation = StringField("Affiliation")
     country = SelectField("Country", choices=SELECT_COUNTRIES_LIST)
     hidden = BooleanField("Hidden")
+    hard_mode = BooleanField("Hard mode")
     banned = BooleanField("Banned")
     submit = SubmitField("Submit")
 

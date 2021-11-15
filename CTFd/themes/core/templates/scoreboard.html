@@ -1,9 +1,11 @@
 {% extends "base.html" %}
-
 {% block content %}
 <div class="jumbotron">
 	<div class="container">
 		<h1>Scoreboard</h1>
+        {% set badge_hard_mode = 'badge-danger' if hard_mode else 'badge-success' %}
+        {% set text_hard_mode = 'Hard' if hard_mode else 'Normal' %}
+        <span id="badge" class="badge {{ badge_hard_mode }}">{{ text_hard_mode }}</span>
 	</div>
 </div>
 <div class="container">
@@ -15,7 +17,7 @@
 		</div>
 	</div>
 
-	{% cache 60, CacheKeys.PUBLIC_SCOREBOARD_TABLE %}
+	{% cache 1, CacheKeys.PUBLIC_SCOREBOARD_TABLE %}
 	{% if standings %}
 	<div id="scoreboard" class="row">
 		<div class="col-md-12">
@@ -25,10 +27,12 @@
 						<td scope="col" width="10px"><b>Place</b></td>
 						<td scope="col"><b>{{ get_mode_as_word(capitalize=True) }}</b></td>
 						<td scope="col"><b>Score</b></td>
+                        <td scope="col"><b>Hard mode</b></td>
 					</tr>
 				</thead>
 				<tbody>
 				{% for standing in standings %}
+                        {% if standing.hard_mode == hard_mode %}
 					<tr>
 						<th scope="row" class="text-center">{{ loop.index }}</th>
 						<td>
@@ -49,7 +53,9 @@
 							</a>
 						</td>
 						<td>{{ standing.score }}</td>
+                    <td>{{ standing.hard_mode }}</td>
 					</tr>
+                    {% endif %}
 				{% endfor %}
 				</tbody>
 			</table>

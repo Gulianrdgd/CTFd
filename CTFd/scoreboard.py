@@ -10,9 +10,9 @@ from CTFd.utils.user import is_admin
 scoreboard = Blueprint("scoreboard", __name__)
 
 
-@scoreboard.route("/scoreboard")
+@scoreboard.route("/scoreboard_hard")
 @check_score_visibility
-def listing():
+def listing_normal():
     infos = get_infos()
 
     if config.is_scoreboard_frozen():
@@ -22,4 +22,19 @@ def listing():
         infos.append("Scores are not currently visible to users")
 
     standings = get_standings()
-    return render_template("scoreboard.html", standings=standings, infos=infos)
+    return render_template("scoreboard.html", standings=standings, infos=infos, hard_mode=False)
+
+
+@scoreboard.route("/scoreboard_normal")
+@check_score_visibility
+def listing_hard():
+    infos = get_infos()
+
+    if config.is_scoreboard_frozen():
+        infos.append("Scoreboard has been frozen")
+
+    if is_admin() is True and scores_visible() is False:
+        infos.append("Scores are not currently visible to users")
+
+    standings = get_standings()
+    return render_template("scoreboard.html", standings=standings, infos=infos, hard_mode=True)

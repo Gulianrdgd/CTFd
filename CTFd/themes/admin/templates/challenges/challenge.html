@@ -40,6 +40,14 @@
 					{{ challenge.state }}
 				</span>
 			</h5>
+            {{ console }}
+            {% set badge_hard_mode = 'badge-danger' if challenge.hard_mode else 'badge-succes' %}
+            {% set text_hard_mode = 'Hard' if challenge.hard_mode else 'Easy' %}
+			<h5>
+				<span class="badge {{ badge_hard_mode }} challenge-state">
+					{{ text_hard_mode }}
+				</span>
+			</h5>
 			<h3 class="text-center">{{ challenge.value }} points</h3>
 			<div class="pt-3">
 				<a class="preview-challenge">

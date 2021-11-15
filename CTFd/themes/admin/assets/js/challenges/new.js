@@ -18,6 +18,7 @@ function loadChalTemplate(challenge) {
       );
 
       $.getScript(CTFd.config.urlRoot + challenge.scripts.create, function() {
+        console.log($("#create-chal-entry-div form").serializeJSON());
         $("#create-chal-entry-div form").submit(function(event) {
           event.preventDefault();
           const params = $("#create-chal-entry-div form").serializeJSON();

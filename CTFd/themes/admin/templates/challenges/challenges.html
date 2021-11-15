@@ -81,6 +81,8 @@
 						<th class="d-none d-md-table-cell d-lg-table-cell sort-col text-center"><b>Value</b></th>
 						<th class="d-none d-md-table-cell d-lg-table-cell sort-col text-center"><b>Type</b></th>
 						<th class="d-none d-md-table-cell d-lg-table-cell sort-col text-center"><b>State</b></th>
+                        <th class="d-none d-md-table-cell d-lg-table-cell sort-col text-center"><b>Hard mode</b></th>
+
 					</tr>
 					</thead>
 					<tbody>
@@ -99,6 +101,11 @@
 							<td class="d-none d-md-table-cell d-lg-table-cell text-center">
 								{% set badge_state = 'badge-danger' if challenge.state == 'hidden' else 'badge-success' %}
 								<span class="badge {{ badge_state }}">{{ challenge.state }}</span>
+							</td>
+                            <td class="d-none d-md-table-cell d-lg-table-cell text-center">
+								{% set badge_hard_mode = 'badge-danger' if challenge.hard_mode else 'badge-success' %}
+                                {% set text_hard_mode = 'Hard' if challenge.hard_mode else 'Easy' %}
+								<span class="badge {{ badge_hard_mode }}">{{ text_hard_mode }}</span>
 							</td>
 						</tr>
 					{% endfor %}

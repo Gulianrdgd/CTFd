@@ -4,7 +4,7 @@ from flask_restx import Namespace, Resource
 from sqlalchemy import select
 
 from CTFd.cache import cache, make_cache_key
-from CTFd.models import Awards, Solves, Users, db
+from CTFd.models import Awards, Solves, Users, db, Teams
 from CTFd.utils import get_config
 from CTFd.utils.dates import isoformat, unix_time_to_utc
 from CTFd.utils.decorators.visibility import (
@@ -25,11 +25,11 @@ class ScoreboardList(Resource):
     @check_score_visibility
     @cache.cached(timeout=60, key_prefix=make_cache_key)
     def get(self):
+        print("Normal standings")
         standings = get_standings()
         response = []
         mode = get_config("user_mode")
         account_type = get_mode_as_word()
-
         if mode == TEAMS_MODE:
             r = db.session.execute(
                 select(
@@ -74,6 +74,7 @@ class ScoreboardList(Resource):
                 entry["members"] = list(membership[x.account_id].values())
 
             response.append(entry)
+
         return {"success": True, "data": response}
 
 
@@ -87,11 +88,13 @@ class ScoreboardDetail(Resource):
         response = {}
 
         standings = get_standings(count=count)
-
         team_ids = [team.account_id for team in standings]
 
         solves = Solves.query.filter(Solves.account_id.in_(team_ids))
         awards = Awards.query.filter(Awards.account_id.in_(team_ids))
+
+        teams = Teams.query.all()
+        teams = list(filter(lambda x: x.get_team_id in team_ids, teams))
 
         freeze = get_config("freeze")
 
@@ -104,6 +107,7 @@ class ScoreboardDetail(Resource):
 
         # Build a mapping of accounts to their solves and awards
         solves_mapper = defaultdict(list)
+
         for solve in solves:
             solves_mapper[solve.account_id].append(
                 {
@@ -134,10 +138,14 @@ class ScoreboardDetail(Resource):
                 solves_mapper[team_id], key=lambda k: k["date"]
             )
 
-        for i, _team in enumerate(team_ids):
+        for i, team in enumerate(team_ids):
             response[i + 1] = {
                 "id": standings[i].account_id,
                 "name": standings[i].name,
                 "solves": solves_mapper.get(standings[i].account_id, []),
-            }
+                "hard_mode":  list(filter(lambda x: x.get_team_id == team, teams))[0].get_hard_mode,
+
+        }
+
+        print(response)
         return {"success": True, "data": response}

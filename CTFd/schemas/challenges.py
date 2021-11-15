@@ -67,6 +67,10 @@ class ChallengeSchema(ma.ModelSchema):
         ],
     )
 
+    hard_mode = field_for(
+        Challenges,
+        "hard_mode",
+    )
     requirements = field_for(
         Challenges, "requirements", validate=[ChallengeRequirementsValidator()],
     )

@@ -7,6 +7,7 @@ import { htmlEntities, cumulativeSum, colorHash } from "../utils";
 
 const graph = $("#score-graph");
 const table = $("#scoreboard tbody");
+const hard_mode = $("#badge").textContent === "Hard"
 
 const updateScores = () => {
   CTFd.api.get_scoreboard_list().then(response => {
@@ -40,6 +41,7 @@ const buildGraphData = () => {
     const places = response.data;
 
     const teams = Object.keys(places);
+
     if (teams.length === 0) {
       return false;
     }
@@ -102,10 +104,12 @@ const buildGraphData = () => {
     for (let i = 0; i < teams.length; i++) {
       const team_score = [];
       const times = [];
-      for (let j = 0; j < places[teams[i]]["solves"].length; j++) {
-        team_score.push(places[teams[i]]["solves"][j].value);
-        const date = dayjs(places[teams[i]]["solves"][j].date);
-        times.push(date.toDate());
+      if(false){
+        for (let j = 0; j < places[teams[i]]["solves"].length; j++) {
+          team_score.push(places[teams[i]]["solves"][j].value);
+          const date = dayjs(places[teams[i]]["solves"][j].date);
+          times.push(date.toDate());
+        }
       }
 
       const total_scores = cumulativeSum(team_score);
@@ -172,8 +176,12 @@ function update() {
 }
 
 $(() => {
-  setInterval(update, 300000); // Update scores every 5 minutes
+  // setInterval(update, 300000); // Update scores every 5 minutes
+    setInterval(update, 500); // Update scores every 5 minutes
+
   createGraph();
 });
+
+// $("#mode_switch").on("click", )
 
 window.updateScoreboard = update;

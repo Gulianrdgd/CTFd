@@ -90,6 +90,7 @@ class Challenges(db.Model):
     value = db.Column(db.Integer)
     category = db.Column(db.String(80))
     type = db.Column(db.String(80))
+    hard_mode = db.Column(db.Boolean, default=False)
     state = db.Column(db.String(80), nullable=False, default="visible")
     requirements = db.Column(db.JSON)
 
@@ -532,6 +533,7 @@ class Teams(db.Model):
     bracket = db.Column(db.String(32))
     hidden = db.Column(db.Boolean, default=False)
     banned = db.Column(db.Boolean, default=False)
+    hard_mode = db.Column(db.Boolean, default=False)
 
     # Relationship for Users
     captain_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="SET NULL"))
@@ -571,6 +573,14 @@ class Teams(db.Model):
     @property
     def score(self):
         return self.get_score(admin=False)
+
+    @property
+    def get_hard_mode(self):
+        return self.hard_mode
+
+    @property
+    def get_team_id(self):
+        return self.id
 
     @property
     def place(self):

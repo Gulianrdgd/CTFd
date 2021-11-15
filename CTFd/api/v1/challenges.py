@@ -233,8 +233,12 @@ class ChallengeList(Resource):
         all_challenge_ids = {
             c.id for c in Challenges.query.with_entities(Challenges.id).all()
         }
+
         for challenge in chal_q:
-            if challenge.requirements:
+            # and (get_current_team_attrs().get("hard_mode") == ):
+            if challenge.hard_mode != get_current_team_attrs().hard_mode:
+                continue
+            elif challenge.requirements:
                 requirements = challenge.requirements.get("prerequisites", [])
                 anonymize = challenge.requirements.get("anonymize")
                 prereqs = set(requirements).intersection(all_challenge_ids)

@@ -78,6 +78,8 @@
 						<th class="sort-col text-center"><b>Country</b></th>
 						<th class="sort-col text-center px-0"><b>Hidden</b></th>
 						<th class="sort-col text-center px-0"><b>Banned</b></th>
+                        <th class="sort-col text-center px-0"><b>Hard mode</b></th>
+
 					</tr>
 				</thead>
 				<tbody>
@@ -130,6 +132,11 @@
 						<td class="team-banned d-md-table-cell d-lg-table-cell text-center" value="{{ team.banned }}">
 							{% if team.banned %}
 								<span class="badge badge-danger">banned</span>
+							{% endif %}
+						</td>
+                        <td class="team-banned d-md-table-cell d-lg-table-cell text-center" value="{{ team.hard_mode }}">
+							{% if team.hard_mode %}
+								<span class="badge badge-danger">mode</span>
 							{% endif %}
 						</td>
 					</tr>

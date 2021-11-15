@@ -56,7 +56,6 @@ def get_standings(count=None, admin=False, fields=None):
     Combine awards and solves with a union. They should have the same amount of columns
     """
     results = union_all(scores, awards).alias("results")
-
     """
     Sum each of the results by the team id to get their score.
     """
@@ -97,6 +96,7 @@ def get_standings(count=None, admin=False, fields=None):
         standings_query = (
             db.session.query(
                 Model.id.label("account_id"),
+                Model.hard_mode.label("hard_mode"),
                 Model.oauth_id.label("oauth_id"),
                 Model.name.label("name"),
                 sumscores.columns.score,
@@ -114,7 +114,6 @@ def get_standings(count=None, admin=False, fields=None):
         standings = standings_query.all()
     else:
         standings = standings_query.limit(count).all()
-
     return standings
 
 

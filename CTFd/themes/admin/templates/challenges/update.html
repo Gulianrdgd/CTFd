@@ -83,6 +83,18 @@
 	</div>
 	{% endblock %}
 
+    {% block hard_mode %}
+    <div class="form-group">
+        <label>
+			Hard mode:<br>
+			<small class="form-text text-muted">
+				This is to separate the harder challenges
+			</small>
+		</label>
+            <input type="checkbox" class="form-check-input" name="hard_mode" value="hard_mode" checked = {{ challenge.hard_mode }}>
+    </div>
+	{% endblock %}
+
 	{% block submit %}
 	<div>
 		<button class="btn btn-success btn-outlined float-right" type="submit">

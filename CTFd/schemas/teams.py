@@ -48,9 +48,13 @@ class TeamSchema(ma.ModelSchema):
         ],
     )
     country = field_for(Teams, "country", validate=[validate_country_code])
+
+    hard_mode = field_for(Teams, "hard_mode")
+
     fields = Nested(
         TeamFieldEntriesSchema, partial=True, many=True, attribute="field_entries"
     )
+
 
     @pre_load
     def validate_name(self, data):
@@ -353,6 +357,7 @@ class TeamSchema(ma.ModelSchema):
             "created",
             "country",
             "banned",
+            "hard_mode",
             "email",
             "affiliation",
             "secret",
