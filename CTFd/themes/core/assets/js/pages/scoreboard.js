@@ -30,9 +30,6 @@ const updateScores = () => {
           "<td>",
           teams[i].score,
           "</td>",
-          "<td>",
-          teams[i].hard_mode,
-          "</td>",
           "</tr>"
         ].join("");
         table.append(row);

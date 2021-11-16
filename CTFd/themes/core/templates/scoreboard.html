@@ -27,7 +27,6 @@
 						<td scope="col" width="10px"><b>Place</b></td>
 						<td scope="col"><b>{{ get_mode_as_word(capitalize=True) }}</b></td>
 						<td scope="col"><b>Score</b></td>
-                        <td scope="col"><b>Hard mode</b></td>
 					</tr>
 				</thead>
 				<tbody>
@@ -53,7 +52,6 @@
 							</a>
 						</td>
 						<td>{{ standing.score }}</td>
-                    <td>{{ standing.hard_mode }}</td>
 					</tr>
                     {% endif %}
 				{% endfor %}
