@@ -41,7 +41,7 @@
 				</span>
 			</h5>
             {{ console }}
-            {% set badge_hard_mode = 'badge-danger' if challenge.hard_mode else 'badge-succes' %}
+            {% set badge_hard_mode = 'badge-danger' if challenge.hard_mode else 'badge-success' %}
             {% set text_hard_mode = 'Hard' if challenge.hard_mode else 'Easy' %}
 			<h5>
 				<span class="badge {{ badge_hard_mode }} challenge-state">

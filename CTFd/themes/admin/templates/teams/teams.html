@@ -136,7 +136,9 @@
 						</td>
                         <td class="team-banned d-md-table-cell d-lg-table-cell text-center" value="{{ team.hard_mode }}">
 							{% if team.hard_mode %}
-								<span class="badge badge-danger">mode</span>
+								<span class="badge badge-danger"> Hard </span>
+                            {% else %}
+                                <span class="badge badge-success"> Normal </span>
 							{% endif %}
 						</td>
 					</tr>

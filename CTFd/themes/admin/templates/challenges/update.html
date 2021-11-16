@@ -91,7 +91,11 @@
 				This is to separate the harder challenges
 			</small>
 		</label>
-            <input type="checkbox" class="form-check-input" name="hard_mode" value="hard_mode" checked = {{ challenge.hard_mode }}>
+        {% if challenge.hard_mode %}
+            <input type="checkbox" class="form-check-input" name="hard_mode" value="hard_mode" checked>
+        {% else %}
+            <input type="checkbox" class="form-check-input" name="hard_mode" value="hard_mode">
+        {% endif %}
     </div>
 	{% endblock %}
 
