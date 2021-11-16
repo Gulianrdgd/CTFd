@@ -44,6 +44,12 @@ class ScoreboardList(Resource):
                 ).where(Users.team_id.isnot(None))
             )
             users = r.fetchall()
+            team_ids = map(lambda z: z.team_id, users)
+
+            teams = Teams.query.all()
+            teams = list(filter(lambda z: z.get_team_id in team_ids, teams))
+
+
             membership = defaultdict(dict)
             for u in users:
                 if u.hidden is False and u.banned is False:
@@ -72,6 +78,8 @@ class ScoreboardList(Resource):
 
             if mode == TEAMS_MODE:
                 entry["members"] = list(membership[x.account_id].values())
+                entry["hard_mode"] = list(filter(
+                    lambda z: z.get_team_id == entry["account_id"], teams))[0].get_hard_mode,
 
             response.append(entry)
 

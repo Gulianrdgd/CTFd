@@ -7,7 +7,7 @@ import { htmlEntities, cumulativeSum, colorHash } from "../utils";
 
 const graph = $("#score-graph");
 const table = $("#scoreboard tbody");
-const hard_mode = $("#badge").textContent === "Hard"
+const hard_mode = $("#badge").text() === "Hard"
 
 const updateScores = () => {
   CTFd.api.get_scoreboard_list().then(response => {
@@ -15,23 +15,28 @@ const updateScores = () => {
     table.empty();
 
     for (let i = 0; i < teams.length; i++) {
-      const row = [
-        "<tr>",
-        '<th scope="row" class="text-center">',
-        i + 1,
-        "</th>",
-        '<td><a href="{0}/teams/{1}">'.format(
-          CTFd.config.urlRoot,
-          teams[i].account_id
-        ),
-        htmlEntities(teams[i].name),
-        "</a></td>",
-        "<td>",
-        teams[i].score,
-        "</td>",
-        "</tr>"
-      ].join("");
-      table.append(row);
+      if (hard_mode === teams[i].hard_mode[0]) {
+        const row = [
+          "<tr>",
+          '<th scope="row" class="text-center">',
+          i + 1,
+          "</th>",
+          '<td><a href="{0}/teams/{1}">'.format(
+              CTFd.config.urlRoot,
+              teams[i].account_id
+          ),
+          htmlEntities(teams[i].name),
+          "</a></td>",
+          "<td>",
+          teams[i].score,
+          "</td>",
+          "<td>",
+          teams[i].hard_mode,
+          "</td>",
+          "</tr>"
+        ].join("");
+        table.append(row);
+      }
     }
   });
 };
@@ -101,19 +106,19 @@ const buildGraphData = () => {
       series: []
     };
 
+
     for (let i = 0; i < teams.length; i++) {
+      if(places[teams[i]].hard_mode === hard_mode){
       const team_score = [];
       const times = [];
-      if(false){
-        for (let j = 0; j < places[teams[i]]["solves"].length; j++) {
-          team_score.push(places[teams[i]]["solves"][j].value);
-          const date = dayjs(places[teams[i]]["solves"][j].date);
-          times.push(date.toDate());
-        }
+      for (let j = 0; j < places[teams[i]]["solves"].length; j++) {
+        team_score.push(places[teams[i]]["solves"][j].value);
+        const date = dayjs(places[teams[i]]["solves"][j].date);
+        times.push(date.toDate());
       }
 
       const total_scores = cumulativeSum(team_score);
-      var scores = times.map(function(e, i) {
+      var scores = times.map(function (e, i) {
         return [e, total_scores[i]];
       });
 
@@ -136,7 +141,7 @@ const buildGraphData = () => {
       };
       option.series.push(data);
     }
-
+  }
     return option;
   });
 };
@@ -177,11 +182,9 @@ function update() {
 
 $(() => {
   // setInterval(update, 300000); // Update scores every 5 minutes
-    setInterval(update, 500); // Update scores every 5 minutes
+    setInterval(update, 1000); // Update scores every 5 minutes
 
   createGraph();
 });
-
-// $("#mode_switch").on("click", )
 
 window.updateScoreboard = update;
