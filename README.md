@@ -5,6 +5,11 @@
 [![MajorLeagueCyber Discourse](https://img.shields.io/discourse/status?server=https%3A%2F%2Fcommunity.majorleaguecyber.org%2F)](https://community.majorleaguecyber.org/)
 [![Documentation Status](https://api.netlify.com/api/v1/badges/6d10883a-77bb-45c1-a003-22ce1284190e/deploy-status)](https://docs.ctfd.io)
 
+## Note
+"This fork is made for the Thalia lustrum programming contest. We tried to implement a hard and easy mode into CTFd. Although the code works it is a not a full implementation and should not be used without extensive testing."
+
+~ Julian van der Horst
+
 ## What is CTFd?
 
 CTFd is a Capture The Flag framework focusing on ease of use and customizability. It comes with everything you need to run a CTF and it's easy to customize with plugins and themes.
