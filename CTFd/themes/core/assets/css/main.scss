@@ -35,6 +35,9 @@ blockquote {
   border-left: 4px solid $secondary;
   padding-left: 15px;
 }
+.text-theme{
+  color: var(--theme-color);
+}
 
 .table thead th {
   white-space: nowrap;
