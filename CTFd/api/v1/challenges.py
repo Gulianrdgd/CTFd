@@ -235,10 +235,7 @@ class ChallengeList(Resource):
         }
 
         for challenge in chal_q:
-            # and (get_current_team_attrs().get("hard_mode") == ):
-            if challenge.hard_mode != get_current_team_attrs().hard_mode:
-                continue
-            elif challenge.requirements:
+            if challenge.requirements:
                 requirements = challenge.requirements.get("prerequisites", [])
                 anonymize = challenge.requirements.get("anonymize")
                 prereqs = set(requirements).intersection(all_challenge_ids)

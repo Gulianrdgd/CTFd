@@ -64,7 +64,6 @@ class BaseChallenge(object):
                 "templates": cls.templates,
                 "scripts": cls.scripts,
             },
-            "hard_mode": challenge.hard_mode,
         }
         return data
 

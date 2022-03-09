@@ -90,7 +90,6 @@ class Challenges(db.Model):
     value = db.Column(db.Integer)
     category = db.Column(db.String(80))
     type = db.Column(db.String(80))
-    hard_mode = db.Column(db.Boolean, default=False)
     state = db.Column(db.String(80), nullable=False, default="visible")
     requirements = db.Column(db.JSON)
 
